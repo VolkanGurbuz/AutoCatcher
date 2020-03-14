@@ -11,7 +11,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="AutoCatcher" target="1.5" />
+      <module name="AutoCatcher" target="11" />
       <module name="maven" target="1.5" />
       <module name="pom" target="1.5" />
       <module name="untitled" target="1.5" />
