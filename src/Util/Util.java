@@ -60,8 +60,12 @@ public final class Util {
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setDoOutput(true);
-            con.getOutputStream().write(postForm.getBytes("UTF-8"));
-            con.getInputStream();
+
+            if(postForm != null){
+                con.getOutputStream().write(postForm.getBytes("UTF-8"));
+                con.getInputStream();
+            }
+
 
             if (200 <= con.getResponseCode() && con.getResponseCode() <= 299) {
                 br = new BufferedReader(new InputStreamReader(con.getInputStream()));
