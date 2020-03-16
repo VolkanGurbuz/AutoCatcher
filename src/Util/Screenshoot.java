@@ -29,6 +29,10 @@ public class Screenshoot {
 
         ImageIO.write(ss.getImage(), "jpg", new File("c://ElementScreenshot.jpg"));
 
+        login(driver);
+       // alo testde bişeyler sorcam  ne testi kanka bi roje gelebilir de onla ilgili test tamam haber et onceden kanka hazir olam tamam resmi ner
+        Thread.sleep(6000);
+
         //taking whole page
       //  this.takeSnapShot(driver, "c://test.png");
 
@@ -52,7 +56,38 @@ public class Screenshoot {
 
         FileUtils.copyFile(SrcFile, DestFile);
 
+
+
+
     }
+
+    public void login(WebDriver driver) throws InterruptedException {
+        try {
+
+            WebElement userName = driver.findElement(By.id("eposta"));
+            WebElement userPassword = driver.findElement(By.id("sifre"));
+            //kanka hesezer rahat birakmior dkfjg açamı amk projeyi hata verio dip
+            // h prboıj e  sende calisiyor mu kanak bu sendkeys ne işe yarıo // kanka keys yani klavye tuslarini gonderiyor basiyor neden buna gerek var
+             userName.sendKeys("deneme");
+            userPassword.sendKeys("aloonur");
+            WebElement captchCode = driver.findElement(By.xpath("//input[@name='captcha_code']"));
+            captchCode.sendKeys("353453");
+
+            Thread.sleep(1000);
+
+            WebElement loginButton = driver.findElement(By.id("loginbut"));
+            loginButton.click();
+
+
+        }
+        catch (Exception e){
+
+            System.err.println("error login " + e.toString());
+        }
+
+
+    }
+
 
 
 }
