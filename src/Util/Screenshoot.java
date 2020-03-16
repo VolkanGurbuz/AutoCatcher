@@ -27,7 +27,7 @@ public class Screenshoot {
 
         Screenshot ss = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(driver,ele);
 
-        ImageIO.write(ss.getImage(), "jpg", new File("c://ElementScreenshot.jpg"));
+        ImageIO.write(ss.getImage(), "jpg", new File("c//ElementScreenshot.jpg"));
 
         login(driver);
        // alo testde bişeyler sorcam  ne testi kanka bi roje gelebilir de onla ilgili test tamam haber et onceden kanka hazir olam tamam resmi ner
