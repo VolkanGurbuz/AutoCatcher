@@ -16,7 +16,7 @@ public class Test {
         System.out.println(Util.sendPostRequest(url, formData));*/
 
         Screenshoot screenshoot = new Screenshoot();
-        screenshoot.testGuru99TakeScreenShot();
+        screenshoot.screenshootTake();
 
     }
 
