@@ -71,10 +71,8 @@ public class Screenshoot {
             captchCode.sendKeys("353453");
 
             Thread.sleep(1000);
-
             WebElement loginButton = driver.findElement(By.id("loginbut"));
             loginButton.click();
-
 
         }
         catch (Exception e){
