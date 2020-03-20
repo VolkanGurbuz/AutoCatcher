@@ -23,14 +23,15 @@ public class Screenshoot {
         driver.get("https://ihale.zirvemotomotiv.com.tr/login");
         //Call user enter driver
 
-        WebElement ele = driver.findElement(By.xpath("//img[@id='captcha']"));
+        //kanka get ile sitenin simini yazdik daha
 
+        WebElement ele = driver.findElement(By.xpath("//img[@id='captcha']"));
+        //burada da takescreenshoot metodu ile element ve driverin screenshot aldik.  captche için mi butrası evet tmm alta kaydedi resmi evey tmm çıkıomn ben o zman // cekersiniz projeyi ok ok
         Screenshot ss = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(driver,ele);
 
-        ImageIO.write(ss.getImage(), "jpg", new File("c://ElementScreenshot.jpg"));
+        ImageIO.write(ss.getImage(), "jpg", new File("elementScreenshot.jpg"));
 
         login(driver);
-       // alo testde bişeyler sorcam  ne testi kanka bi roje gelebilir de onla ilgili test tamam haber et onceden kanka hazir olam tamam resmi ner
         Thread.sleep(6000);
 
         //taking whole page
@@ -57,8 +58,6 @@ public class Screenshoot {
         FileUtils.copyFile(SrcFile, DestFile);
 
 
-
-
     }
 
     public void login(WebDriver driver) throws InterruptedException {
@@ -66,8 +65,6 @@ public class Screenshoot {
 
             WebElement userName = driver.findElement(By.id("eposta"));
             WebElement userPassword = driver.findElement(By.id("sifre"));
-            //kanka hesezer rahat birakmior dkfjg açamı amk projeyi hata verio dip
-            // h prboıj e  sende calisiyor mu kanak bu sendkeys ne işe yarıo // kanka keys yani klavye tuslarini gonderiyor basiyor neden buna gerek var
              userName.sendKeys("deneme");
             userPassword.sendKeys("aloonur");
             WebElement captchCode = driver.findElement(By.xpath("//input[@name='captcha_code']"));
