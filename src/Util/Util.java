@@ -1,6 +1,10 @@
 package Util;
 
 
+import net.sourceforge.tess4j.ITesseract;
+import net.sourceforge.tess4j.Tesseract;
+import net.sourceforge.tess4j.TesseractException;
+import okhttp3.*;
 import org.htmlcleaner.*;
 import org.unbescape.html.HtmlEscape;
 import org.w3c.dom.Document;
@@ -8,10 +12,12 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javax.imageio.ImageIO;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.*;
 import java.net.http.HttpClient;
@@ -61,7 +67,7 @@ public final class Util {
             con.setRequestMethod("POST");
             con.setDoOutput(true);
 
-            if(postForm != null){
+            if (postForm != null) {
                 con.getOutputStream().write(postForm.getBytes("UTF-8"));
                 con.getInputStream();
             }
@@ -100,7 +106,6 @@ public final class Util {
             return stringBuilder.toString();
         }
     }
-
 
 
     private static String parsePrice(String price) {
@@ -166,6 +171,22 @@ public final class Util {
         return ret;
     }
 
+    public static String crackImage(String filePath) {
+        File imageFile = new File(filePath);
+        ITesseract instance = new Tesseract();
+        instance.setDatapath("tessdata");
+        try {
+            String result = instance.doOCR(imageFile);
+            return result;
+
+        } catch (TesseractException e) {
+
+            System.err.println(e.getMessage());
+
+            return "Error while reading image";
+
+        }
+    }
 
     private String getCurrentDate() {
         try {
@@ -177,6 +198,29 @@ public final class Util {
             System.err.println("errror getCurrentDate " + e);
         }
         return null;
+    }
+
+
+    public static void getResult(String file) throws IOException {
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        // MediaType mediaType = MediaType.parse("text/plain");
+        RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("isOverlayRequired", "false")
+                .addFormDataPart("base64Image", "data:image/png;base64," + file)
+                .addFormDataPart("OCREngine", "2")
+                .addFormDataPart("scale", "true")
+                .build();
+
+        Request request = new Request.Builder()
+                .url("https://api.ocr.space/parse/image")
+                .method("POST", body)
+                .addHeader("apikey", "b89a3d0d6988957")
+                .build();
+        Response response = client.newCall(request).execute();
+
+        System.out.println(response.body().string());
+
     }
 
 }

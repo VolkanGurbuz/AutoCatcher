@@ -1,5 +1,6 @@
 package Util;
 
+import okhttp3.*;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.Point;
@@ -11,6 +12,7 @@ import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 
 
 public class Screenshoot {
@@ -79,6 +81,9 @@ public class Screenshoot {
 
 
     }
+
+
+
 
 
 

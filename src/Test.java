@@ -1,5 +1,10 @@
 import Util.Util;
 import Util.Screenshoot;
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Base64;
 
 public class Test {
     public static void main(String[] args) throws Exception {
@@ -16,7 +21,12 @@ public class Test {
         System.out.println(Util.sendPostRequest(url, formData));*/
 
         Screenshoot screenshoot = new Screenshoot();
-        screenshoot.screenshootTake();
+      //  screenshoot.screenshootTake();
+
+        byte[] fileContent = FileUtils.readFileToByteArray(new File("verify.png"));
+        String encodedString = Base64.getEncoder().encodeToString(fileContent);
+        Util.getResult(encodedString);
+
 
     }
 
