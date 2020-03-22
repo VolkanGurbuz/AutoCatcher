@@ -5,6 +5,7 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
 import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
@@ -17,10 +18,12 @@ import java.io.IOException;
 
 public class Screenshoot {
 
-    public void screenshootTake() throws Exception {
-        System.setProperty("webdriver.gecko.driver", "geckodriver");
+    public WebDriver screenshootTake() throws Exception {
+        System.setProperty("webdriver.gecko.driver", "geckodriver.exe");
+        FirefoxOptions options = new FirefoxOptions();
+        options.addPreference("layout.css.devPixelsPerPx", "1");
         WebDriver driver;
-        driver = new FirefoxDriver();
+        driver = new FirefoxDriver(options);
         //goto url
         driver.get("https://ihale.zirvemotomotiv.com.tr/login");
 
@@ -30,10 +33,11 @@ public class Screenshoot {
         //burada da takescreenshoot metodu ile element ve driverin screenshot aldik.  captche için mi butrası evet tmm alta kaydedi resmi evey tmm çıkıomn ben o zman // cekersiniz projeyi ok ok
         Screenshot ss = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(driver,ele);
 
-        ImageIO.write(ss.getImage(), "jpg", new File("elementScreenshot.jpg"));
+        ImageIO.write(ss.getImage(), "png", new File("elementScreenshot.png"));
 
-        login(driver);
-        Thread.sleep(6000);
+        Thread.sleep(3000);
+
+        return driver;
 
         //taking whole page
         //  this.takeSnapShot(driver, "c://test.png");
@@ -61,7 +65,7 @@ public class Screenshoot {
 
     }
 
-    public void login(WebDriver driver) throws InterruptedException {
+    public void login(WebDriver driver, String code) throws InterruptedException {
         try {
 
             WebElement userName = driver.findElement(By.id("eposta"));
@@ -69,7 +73,7 @@ public class Screenshoot {
             userName.sendKeys("deneme");
             userPassword.sendKeys("aloonur");
             WebElement captchCode = driver.findElement(By.xpath("//input[@name='captcha_code']"));
-            captchCode.sendKeys("353453");
+            captchCode.sendKeys(code);
             Thread.sleep(1000);
             WebElement loginButton = driver.findElement(By.id("loginbut"));
             loginButton.click();
