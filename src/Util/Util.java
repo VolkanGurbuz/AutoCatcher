@@ -201,7 +201,7 @@ public final class Util {
     }
 
 
-    public static void getResult(String file) throws IOException {
+    public static String getResult(String file) throws IOException {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         // MediaType mediaType = MediaType.parse("text/plain");
@@ -219,7 +219,7 @@ public final class Util {
                 .build();
         Response response = client.newCall(request).execute();
 
-        System.out.println(response.body().string());
+        return response.body().string();
 
     }
 
