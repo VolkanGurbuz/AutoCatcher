@@ -12,9 +12,9 @@ import java.util.Base64;
 public class Test {
     public static void main(String[] args) throws Exception {
 
-        final String regex = "[A-Za-z0-9]";
-        final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
-
+        //avoid exception sockettimeout
+        System.setProperty("http.proxyHost", "127.0.0.1");
+        System.setProperty("http.proxyPort", "8182");
         String url = "https://ihale.zirvemotomotiv.com.tr/login";
 
       /*  String capchaLink = "http://azcaptcha.com/in.php?key=2nfdhwxcv9ymzg8bbkxzpmf74q6hwyjc&method=userrecaptcha&googlekey=6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-&pageurl=https://ihale.zirvemotomotiv.com.tr/verify";
@@ -30,28 +30,14 @@ public class Test {
 
         Screenshoot screenshoot = new Screenshoot();
         driver = screenshoot.screenshootTake();
+        Util util = new Util();
 
-        byte[] fileContent = FileUtils.readFileToByteArray(new File("elementScreenshot.png"));
-        String encodedString = Base64.getEncoder().encodeToString(fileContent);
+        String encodedString =util.encodedString();
         String jsonString = Util.getResult(encodedString);
 
-        JSONObject jsonObject = new JSONObject(jsonString);
-        JSONArray jsonArray = jsonObject.getJSONArray("ParsedResults");
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject obj1 = jsonArray.getJSONObject(i);
-            String code = obj1.getString("ParsedText");
-            System.out.println(code);
-            Matcher veri = pattern.matcher(code);
-            if (code.length() != 5 && !veri.matches()){
-                System.err.println("Kod 5 Karakterli Değil veya İçerisinde Özel Karakter Barındırıyor!");
-                System.exit(0);
-            }
-            screenshoot.login(driver,code);
-        }
-
-        driver.quit();
-
-        System.exit(0);
+        String code =  util.getCode(jsonString);
+        System.out.println("code: " + code);
+    //    screenshoot.login(driver, code);
 
 
     }
