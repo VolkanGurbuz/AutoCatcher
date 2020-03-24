@@ -5,7 +5,10 @@ import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 import okhttp3.*;
+import org.apache.commons.io.FileUtils;
 import org.htmlcleaner.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.unbescape.html.HtmlEscape;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -29,6 +32,8 @@ import java.text.DateFormat;
 import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class Util {
 
@@ -217,10 +222,42 @@ public final class Util {
                 .method("POST", body)
                 .addHeader("apikey", "b89a3d0d6988957")
                 .build();
+
+
         Response response = client.newCall(request).execute();
 
         return response.body().string();
 
     }
+
+    public String getCode(String jsonString) {
+        String code = null;
+        try {
+            JSONObject jsonObject = new JSONObject(jsonString);
+            JSONArray jsonArray = jsonObject.getJSONArray("ParsedResults");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject obj1 = jsonArray.getJSONObject(i);
+                code = obj1.getString("ParsedText");
+            }
+            return code;
+
+        } catch (Exception e) {
+            System.out.println("getcode" + " failire " + e);
+        }
+        return code;
+    }
+
+
+    public String encodedString() {
+        try {
+            byte[] fileContent = FileUtils.readFileToByteArray(new File("elementScreenshot.png"));
+            return Base64.getEncoder().encodeToString(fileContent);
+
+        } catch (Exception e) {
+            System.out.println("fail encodedString" + e);
+        }
+        return null;
+    }
+
 
 }
