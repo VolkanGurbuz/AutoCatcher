@@ -15,16 +15,7 @@ public class Test {
         //avoid exception sockettimeout
         System.setProperty("http.proxyHost", "127.0.0.1");
         System.setProperty("http.proxyPort", "8182");
-        String url = "https://ihale.zirvemotomotiv.com.tr/login";
-
-      /*  String capchaLink = "http://azcaptcha.com/in.php?key=2nfdhwxcv9ymzg8bbkxzpmf74q6hwyjc&method=userrecaptcha&googlekey=6Le-wvkSVVABCPBMRTvw0Q4Muexq1bi0DJwx_mJ-&pageurl=https://ihale.zirvemotomotiv.com.tr/verify";
-        System.out.println(Util.sendPostRequest(capchaLink ,null));
-
-        String captch = Util.sendPostRequest(capchaLink ,null).substring(7);
-        System.out.println("capth: " + captch);*/
-/*
-        String formData = "eposta=july234%40gmail.com&sifre=w435345&captcha_code=223424";
-        System.out.println(Util.sendPostRequest(url, formData));*/
+        String url = "";
 
         WebDriver driver;
 
@@ -39,9 +30,6 @@ public class Test {
         System.out.println("code: " + code);
     //    screenshoot.login(driver, code);
 
-
     }
-
-
 
 }
