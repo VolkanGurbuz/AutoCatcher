@@ -36,10 +36,7 @@ public class Screenshoot {
         driver.get("https://ihale.zirvemotomotiv.com.tr/login");
        // driver.manage().window().fullscreen();
 
-        //kanka get ile sitenin simini yazdik daha
-
         WebElement ele = driver.findElement(By.xpath("//img[@id='captcha']"));
-        //burada da takescreenshoot metodu ile element ve driverin screenshot aldik.  captche için mi butrası evet tmm alta kaydedi resmi evey tmm çıkıomn ben o zman // cekersiniz projeyi ok ok
         Screenshot ss = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(driver, ele);
 
         ImageIO.write(ss.getImage(), "png", new File("elementScreenshot.png"));
